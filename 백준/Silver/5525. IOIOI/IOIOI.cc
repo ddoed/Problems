@@ -6,26 +6,22 @@ int main()
 {
 	int n, m;
 	string s;
-	string findS = "I";
 
 	cin >> n >> m;
 	cin >> s;
 
-	for (int i = 0;i < n;i++)
-	{
-		findS += "OI";
-	}
-	int startIdx = 0;
 	int cnt = 0;
-	while(startIdx < s.size())
+	int patternCnt = 0;
+
+	for (int i = 0;i < m-2;i++)
 	{
-		auto x = s.find(findS, startIdx);
-		if (x != string::npos)
+		if (s[i] == 'I' && s[i + 1] == 'O' && s[i + 2] == 'I')
 		{
-			startIdx = x + 2;
-			cnt++;
+			patternCnt++;
+			if (patternCnt >= n) cnt++;
+			i++;
 		}
-		else break;
+		else patternCnt = 0;
 	}
 
 	cout << cnt;
