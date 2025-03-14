@@ -1,5 +1,6 @@
 #include <iostream>
-#include <set>
+#include <queue>
+#include <unordered_map>
 
 using namespace std;
 
@@ -7,37 +8,68 @@ int main()
 {
 	ios_base::sync_with_stdio(false);
 	cin.tie(nullptr);
-	
+
 	int t;
 	cin >> t;
 
-	while (t--)
+	while(t--)
 	{
 		int k;
+		priority_queue<int> maxQ;
+		priority_queue<int, vector<int>, greater<int>> minQ;
+		unordered_map<int, int> cnt;
+
 		cin >> k;
-		multiset<int> ms;
+		int n;
+		string cmd;
 
-		for (int i = 0;i < k;i++)
+		while(k--)
 		{
-			string cmd;
-			int n;
 			cin >> cmd >> n;
-
-			if (cmd == "I") ms.insert(n);
-			else if (!ms.empty())
+			if (cmd == "I")
 			{
-				if (n == 1) ms.erase(prev(ms.end()));
-				else if (n == -1) ms.erase(ms.begin());
+				minQ.push(n);
+				maxQ.push(n);
+				cnt[n]++;
+			}
+			else if (cmd == "D")
+			{
+				if (n == 1)
+				{
+					while (!maxQ.empty() && cnt[maxQ.top()] == 0) maxQ.pop();
+
+					if (!maxQ.empty())
+					{
+						cnt[maxQ.top()]--;
+						maxQ.pop();
+					}
+				}
+				if (n==-1)
+				{
+					while (!minQ.empty() && cnt[minQ.top()] == 0) minQ.pop();
+
+					if (!minQ.empty())
+					{
+						cnt[minQ.top()]--;
+						minQ.pop();
+					}
+				}
 			}
 		}
 
-		if (ms.empty()) 
+		while (!maxQ.empty() && cnt[maxQ.top()] == 0)
+			maxQ.pop();
+		while (!minQ.empty() && cnt[minQ.top()] == 0)
+			minQ.pop();
+
+
+		if (maxQ.empty() || minQ.empty())
 		{
 			cout << "EMPTY" << '\n';
 		}
-		else 
+		else
 		{
-			cout << *prev(ms.end()) << ' ' << *ms.begin() << '\n';
+			cout << maxQ.top() << ' ' << minQ.top() << '\n';
 		}
 	}
 
