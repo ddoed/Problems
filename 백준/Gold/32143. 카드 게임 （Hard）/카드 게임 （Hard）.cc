@@ -23,19 +23,18 @@ int main()
 		pq.push(x);
 		sum += x;
 	}
-	int hp = h;
 
 	if (h > sum) cout << -1 << '\n';
 	else
 	{ 
 		int num = 0;
-		while(hp < sum)
+		while(h < sum)
 		{
 			num = pq.top();
 			sum -= pq.top();
 			pq.pop();
 		}
-		if (hp != sum)
+		if (h != sum)
 		{
 			pq.push(num);
 			sum += num;
@@ -46,7 +45,6 @@ int main()
 	for (int i = 0;i < q;i++)
 	{
 		int qNum;
-		hp = h;
 		cin >> qNum;
 		pq.push(qNum);
 		sum += qNum;
@@ -55,13 +53,13 @@ int main()
 		else
 		{
 			int num = 0;
-			while (hp < sum)
+			while (h < sum)
 			{
 				num = pq.top();
 				sum -= pq.top();
 				pq.pop();
 			}
-			if (hp != sum)
+			if (h != sum)
 			{
 				pq.push(num);
 				sum += num;
