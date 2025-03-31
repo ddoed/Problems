@@ -1,73 +1,90 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
-#include <unordered_set>
+#include <climits>
+#include <unordered_map>
+
 using namespace std;
 
-int main() {
-    ios::sync_with_stdio(0); cin.tie(0);
+int main()
+{
+	ios::sync_with_stdio(0); cin.tie(0);
+	
+	int n, m;
+	double r;
+	vector<int> f;
+	cin >> n >> m >> r;
+	vector<int> p;
+	unordered_map<int, int> um;
+	vector<int> width;
 
-    int n, m;
-    double r;
-    cin >> n >> m >> r;
+	for (int i = 0;i < n;i++)
+	{
+		int x;
+		cin >> x;
+		p.push_back(x);
 
-    vector<int> p(n);
-    for (int i = 0; i < n; i++) cin >> p[i];
-    sort(p.begin(), p.end());
+		for (int j = 0;j < p.size();j++)
+		{
+			int w = abs(p[i] - p[j]);
+			if (w == 0) continue;
+			if (um[w] == 0)
+			{
+				um[w]++;
+				width.push_back(w);
+			}
+		}
+	}
 
-    // 밑변 후보 중복 없이 저장
-    unordered_set<int> width_set;
-    for (int i = 0; i < n; i++) {
-        for (int j = i + 1; j < n; j++) {
-            width_set.insert(abs(p[j] - p[i]));
-        }
-    }
-    vector<int> widths(width_set.begin(), width_set.end());
-    sort(widths.begin(), widths.end());
+	for (int i = 0;i < m;i++)
+	{
+		int x;
+		cin >> x;
+		f.push_back(x);
+	}
 
-    // 깃대 정렬
-    vector<int> f(m);
-    for (int i = 0; i < m; i++) cin >> f[i];
-    sort(f.begin(), f.end());
+	sort(width.begin(), width.end());
+	sort(f.begin(), f.end());
 
-    // 실수 이분 탐색
-    double left = 0, right = r;
-    double result = -1;
+	double result = -1;
 
-    for (int iter = 0; iter < 100; iter++) {
-        double mid = (left + right) / 2.0;
-        bool canMake = false;
-        double bestArea = -1;
+	for(int i=0;i<width.size();i++)
+	{
+		int w = width[i];
+		double fl = ((2.0) * r) / w;
 
-        for (int w : widths) {
-            double minH = (2.0 * mid) / w;
-            auto it = lower_bound(f.begin(), f.end(), minH);
-            if (it != f.end()) {
-                double h = *it;
-                double area = (w * h) / 2.0;
-                if (area <= r) {
-                    canMake = true;
-                    bestArea = area;
-                    break;
-                }
-            }
-        }
+		int left = 0, right = f.size() - 1;
+		int mid = -1;
 
-        if (canMake) {
-            result = bestArea;
-            left = mid;
-        } else {
-            right = mid;
-        }
-    }
+		while (left <= right)
+		{
+			mid = (left + right) / 2;
+			fl = 2.0 * r / w;
 
-    if (result < 0) {
-        cout << -1 << '\n';
-    } else {
-        cout << fixed;
-        cout.precision(1);
-        cout << result << '\n';
-    }
+			if (f[mid] > fl)
+			{
+				right = mid - 1;
+			}
+			else
+			{
+				left = mid + 1;
+				double area = w * f[mid] / 2.0;
+				result = max(result, area);
+			}
+		}
+		
+	}
+	if (result > 0)
+	{
+		cout << fixed;
+		cout.precision(1);
+		cout << result;
+	}
+	else
+	{
+		cout << -1;
+	}
+	
 
-    return 0;
+	return 0;
 }
