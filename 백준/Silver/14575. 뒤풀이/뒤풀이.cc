@@ -29,7 +29,7 @@ int main()
 	}
 
 	long long left = 1;
-	long long right = INT_MAX;
+	long long right = t;
 	long long mid;
 	long long result = -1;
 
