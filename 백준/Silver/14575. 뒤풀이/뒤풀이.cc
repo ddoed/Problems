@@ -47,6 +47,7 @@ int main()
 
 			if (good > mid)
 			{
+				left = mid + 1;
 				stop = true;
 				break;
 			}
@@ -65,10 +66,6 @@ int main()
 			{
 				left = mid + 1;
 			}
-		}
-		else
-		{
-			left = mid + 1;
 		}
 	}
 
