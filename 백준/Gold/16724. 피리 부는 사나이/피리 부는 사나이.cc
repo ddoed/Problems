@@ -27,10 +27,6 @@ void uni(int u, int v) {
 	p[v] = u;
 }
 
-bool isValid(int x) {
-	return x >= 0 && x < n * m;
-}
-
 signed main() {
 	ios::sync_with_stdio(false);
 	cin.tie(NULL);
