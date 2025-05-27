@@ -47,11 +47,7 @@ signed main() {
 		if (n < comb[i]) {
 			len = i;
 			cnt = comb[i - 1];
-			for (int j = len-1; j <= 9;j++) {
-				visited[j] = true;
-				DFS(j, 1);
-				visited[j] = false;
-			}
+			DFS(10, 0);
 		}
 	}
 	cout << -1;
