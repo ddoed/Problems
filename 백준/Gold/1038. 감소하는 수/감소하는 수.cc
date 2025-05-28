@@ -14,7 +14,7 @@ int cnt = 0;
 bool visited[10];
 int len;
 
-void DFS(int st, int size) {
+void DFS(int en, int size) {
 	if (size == len) {
 		if (cnt == n) {
 			for (int i = 9;i >= 0;i--) {
@@ -25,7 +25,7 @@ void DFS(int st, int size) {
 		else cnt++;
 		return;
 	}
-	for (int i = 0;i < st;i++) {
+	for (int i = 0;i < en;i++) {
 		visited[i] = true;
 		DFS(i, size + 1);
 		visited[i] = false;
