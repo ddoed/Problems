@@ -1,57 +1,51 @@
-#include <iostream>
-#include <set>
+#include <bits/stdc++.h>
 
 using namespace std;
 
-set<int> se;
+#define MOD 1000000000
+#define int long long
+#define pii pair<int, int>
+#define INF 0x3f3f3f3f
+#define tiii tuple<int,int,int>
 
-void Command(string s)
-{
-	int num;
-	if (s == "add")
-	{
-		cin >> num;
-		se.insert(num);
-	}
-	else if (s == "remove")
-	{
-		cin >> num;
-		se.erase(num);
-	}
-	else if (s == "check")
-	{
-		cin >> num;
-		if (se.find(num) != se.end()) cout << 1 << '\n';
-		else cout << 0 << '\n';
-	}
-	else if (s == "toggle")
-	{
-		cin >> num;
-		if (se.find(num) != se.end()) se.erase(num);
-		else se.insert(num);
-	}
-	else if (s == "all")
-	{
-		se = { 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20 };
-	}
-	else if (s == "empty")
-	{
-		se.clear();
-	}
-}
+int a = 0;
 
-int main()
-{
-	ios_base::sync_with_stdio(0);
+void Command(string& s) {
+	int x;
+	if (s == "add") {
+		cin >> x;
+		a |= (1 << x);
+	}
+	else if (s == "remove") {
+		cin >> x;
+		a &= ~(1 << x);
+	}
+	else if (s == "check") {
+		cin >> x;
+		cout << ((a & (1 << x)) ? 1 : 0) << '\n';
+	}
+	else if (s == "toggle") {
+		cin >> x;
+		a ^= (1 << x);
+	}
+	else if (s == "all") {
+		a |= (1 << 21) -1;
+	}
+	else if (s == "empty") {
+		a = 0;
+	}
+}       
+
+signed main() {
+	ios::sync_with_stdio(false);
 	cin.tie(0);
-	int n;
-	cin >> n;
-	for (int i = 0;i < n;i++)
-	{
-		string s;
-		cin >> s;
-		Command(s);
+	cout.tie(0);
+	
+	int m;
+	cin >> m;
+	for (int i = 0;i < m;i++) {
+		string in;
+		cin >> in;
+		Command(in);
 	}
-
-	return 0;
 }
